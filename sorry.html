@@ -12,12 +12,13 @@
             font-family: 'Poppins', sans-serif;
             background: #fff5f7;
             overflow-x: hidden;
+            transition: background 1s ease;
         }
 
         .wheel-container {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 280px;
+            height: 280px;
             margin: 0 auto;
         }
 
@@ -34,7 +35,7 @@
 
         .marker {
             position: absolute;
-            top: -20px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
@@ -46,7 +47,7 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 2.5rem;
             box-shadow: 0 20px 50px rgba(251, 113, 133, 0.15);
@@ -60,75 +61,111 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
             color: white;
-            padding: 10px;
+            padding: 5px;
             text-align: center;
+        }
+
+        .progress-bar-inner {
+            transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .message-card {
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-    <div id="gameContainer" class="glass-card max-w-md w-full p-8 text-center relative overflow-hidden">
+    <div id="gameContainer" class="glass-card max-w-md w-full p-6 md:p-8 text-center relative overflow-hidden">
         
         <!-- Giriş Ekranı -->
         <div id="intro">
-            <div class="text-6xl mb-6">🎡</div>
-            <h1 class="text-2xl font-bold text-gray-800 mb-4">Gönül Alma Çarkı</h1>
-            <p class="text-gray-500 mb-8">Hatalıyım biliyorum... Affedilmek için her şeye hazırım. Çarkı çevir ve kaderimi sen belirle!</p>
-            <button onclick="startGame()" class="bg-rose-500 text-white px-10 py-4 rounded-2xl font-bold shadow-lg hover:bg-rose-600 transition-all">
-                Çevirmeye Başla ✨
+            <div class="text-7xl mb-6">🎁</div>
+            <h1 class="text-2xl font-bold text-gray-800 mb-4 tracking-tight">Hala Kızgın mısın? 🥺</h1>
+            <p class="text-gray-500 mb-8 text-sm leading-relaxed">Senin gönlünü almak için küçük bir oyun hazırladım. Barışmak için çarkı çevirip puanları toplamalısın!</p>
+            <button onclick="startGame()" class="bg-rose-500 text-white px-10 py-4 rounded-2xl font-bold shadow-lg hover:bg-rose-600 transition-all hover:scale-105">
+                Oyuna Başla ✨
             </button>
         </div>
 
-        <!-- Çark Ekranı -->
+        <!-- Ana Oyun Ekranı -->
         <div id="wheelScreen" class="hidden">
+            <!-- Duygu Ölçer (Love-o-Meter) -->
+            <div class="mb-6">
+                <div class="flex justify-between text-xs font-bold text-rose-400 mb-2 px-1 uppercase tracking-widest">
+                    <span>Kızgınlık 🧊</span>
+                    <span>Sevgi 💖</span>
+                </div>
+                <div class="w-full h-4 bg-rose-50 rounded-full overflow-hidden border border-rose-100 shadow-inner">
+                    <div id="progressBar" class="progress-bar-inner h-full bg-gradient-to-r from-rose-300 to-rose-500 w-0"></div>
+                </div>
+            </div>
+
             <div class="marker"></div>
-            <div class="wheel-container mb-8">
+            <div class="wheel-container mb-6">
                 <div id="wheel"></div>
             </div>
             
-            <div id="resultArea" class="h-16 flex items-center justify-center mb-6">
-                <p id="resultText" class="text-rose-500 font-semibold text-lg italic">Gönlünü almak için ne yapmalıyım?</p>
+            <div id="resultArea" class="h-20 flex flex-col items-center justify-center mb-6 px-4">
+                <p id="resultText" class="text-rose-500 font-semibold text-lg italic animate-pulse">Hadi, bir ödül seçelim!</p>
+                <p id="apologyNote" class="text-gray-400 text-xs mt-2 italic opacity-0 transition-opacity duration-500"></p>
             </div>
 
-            <button id="spinBtn" onclick="spinWheel()" class="bg-rose-500 text-white px-12 py-4 rounded-2xl font-bold shadow-lg hover:bg-rose-600 transition-all disabled:bg-gray-300">
+            <button id="spinBtn" onclick="spinWheel()" class="w-full bg-rose-500 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:bg-rose-600 transition-all disabled:bg-gray-200">
                 ÇARK'I ÇEVİR 🎲
             </button>
 
             <div id="finalAction" class="hidden mt-6 animate-bounce">
-                <button onclick="finishGame()" class="bg-emerald-500 text-white px-12 py-4 rounded-2xl font-bold shadow-lg hover:bg-emerald-600 transition-all">
-                    TAMAM, AFFETTİM ❤️
+                <button onclick="finishGame()" class="w-full bg-emerald-500 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:bg-emerald-600 transition-all">
+                    BARIŞMAYI KABUL ET ❤️
                 </button>
             </div>
         </div>
 
         <!-- Final Ekranı -->
         <div id="outro" class="hidden">
-            <div class="text-8xl mb-6">💖</div>
-            <h1 class="text-3xl font-bold text-gray-800 mb-4">Yaşasın!</h1>
-            <p class="text-gray-600 mb-6">Çıkan tüm sözleri tutmaya hazırım. Seni çok seviyorum ve bir daha üzmeyeceğim!</p>
-            <div id="rewardList" class="bg-rose-50 p-4 rounded-xl text-rose-600 font-medium text-sm italic"></div>
+            <div class="text-8xl mb-6">🫂</div>
+            <h1 class="text-3xl font-bold text-gray-800 mb-4 tracking-tighter">Dünyalar Benim Oldu!</h1>
+            <p class="text-gray-600 mb-6 text-sm">Affettiğin için teşekkür ederim. İşte tutmam gereken sözlerin listesi:</p>
+            <div id="rewardList" class="bg-rose-50 p-5 rounded-2xl text-rose-600 font-medium text-sm italic space-y-2 text-left shadow-inner"></div>
+            <p class="mt-6 text-xs text-rose-300">Seni her şeyden çok seviyorum... ✨</p>
         </div>
     </div>
 
     <script>
         const rewards = [
-            "En Sevdiğin Yemek 🍕",
-            "1 Saat Masaj 💆‍♀️",
-            "Sınırsız İltifat ✨",
-            "Alışveriş Günü 🛍️",
-            "Romantik Akşam Yemeği 🕯️",
-            "Film Gecesi + Patlamış Mısır 🍿",
-            "Ömür Boyu Sadakat ❤️",
-            "En Sevdiğin Tatlı 🍰"
+            "Baş Başa Akşam Yemeği 🕯️",
+            "Sınırsız Masaj Hakkı 💆‍♀️",
+            "En Sevdiğin Tatlı 🍰",
+            "Tüm Gün Alışveriş 🛍️",
+            "Romantik Bir Mektup 💌",
+            "Film Gecesi Seçimi 🍿",
+            "100 Tane İltifat 🌟",
+            "Kocaman Bir Sarılma 🫂"
+        ];
+
+        const apologyNotes = [
+            "Hatalıyım ama seni seviyorum...",
+            "Gülüşünü çok özledim.",
+            "Lütfen bana bir şans daha ver.",
+            "Kalbim sadece senin için atıyor.",
+            "Seni üzmek isteyeceğim son şey.",
+            "Hadi buzları eritelim mi?"
         ];
 
         const colors = ['#fb7185', '#f472b6', '#fb7185', '#f472b6', '#fb7185', '#f472b6', '#fb7185', '#f472b6'];
         let currentRotation = 0;
         let spinCount = 0;
         let wonRewards = [];
+        let progress = 0;
 
         function startGame() {
             document.getElementById('intro').classList.add('hidden');
@@ -148,11 +185,11 @@
                 
                 const textSpan = document.createElement('span');
                 textSpan.innerText = text;
-                textSpan.style.transform = `skewY(-${90 - sliceDeg}deg) rotate(${sliceDeg/2}deg) translateY(-20px)`;
+                textSpan.style.transform = `skewY(-${90 - sliceDeg}deg) rotate(${sliceDeg/2}deg) translateY(-15px)`;
                 textSpan.style.position = 'absolute';
-                textSpan.style.right = '10px';
-                textSpan.style.bottom = '10px';
-                textSpan.style.width = '80px';
+                textSpan.style.right = '15px';
+                textSpan.style.bottom = '15px';
+                textSpan.style.width = '70px';
                 
                 slice.appendChild(textSpan);
                 wheel.appendChild(slice);
@@ -162,9 +199,13 @@
         function spinWheel() {
             const spinBtn = document.getElementById('spinBtn');
             const resultText = document.getElementById('resultText');
-            spinBtn.disabled = true;
+            const apologyNote = document.getElementById('apologyNote');
+            const progressBar = document.getElementById('progressBar');
             
-            const extraDeg = Math.floor(Math.random() * 360) + 720; // En az 2 tam tur
+            spinBtn.disabled = true;
+            apologyNote.style.opacity = 0;
+            
+            const extraDeg = Math.floor(Math.random() * 360) + 1440; // En az 4 tam tur
             currentRotation += extraDeg;
             
             document.getElementById('wheel').style.transform = `rotate(${currentRotation}deg)`;
@@ -174,15 +215,24 @@
                 const sliceIndex = Math.floor(((360 - actualDeg) % 360) / (360 / rewards.length));
                 const win = rewards[sliceIndex];
                 
-                resultText.innerText = `Kazandın: ${win}! 🎁`;
+                resultText.innerText = `Söz Veriyorum: ${win} 🎁`;
                 if(!wonRewards.includes(win)) wonRewards.push(win);
                 
+                // Duygu ölçeri güncelle
                 spinCount++;
-                spinBtn.disabled = false;
-                spinBtn.innerText = "TEKRAR ÇEVİR 🔄";
+                progress = Math.min(spinCount * 33.4, 100);
+                progressBar.style.width = progress + '%';
 
-                if(spinCount >= 2) {
+                // Rastgele özür notu göster
+                apologyNote.innerText = apologyNotes[Math.floor(Math.random() * apologyNotes.length)];
+                apologyNote.style.opacity = 1;
+                
+                spinBtn.disabled = false;
+                spinBtn.innerText = "YENİ BİR ŞEY DAHA SEÇ 🔄";
+
+                if(progress >= 100) {
                     document.getElementById('finalAction').classList.remove('hidden');
+                    spinBtn.classList.add('hidden');
                 }
             }, 4000);
         }
@@ -190,12 +240,20 @@
         function finishGame() {
             document.getElementById('wheelScreen').classList.add('hidden');
             document.getElementById('outro').classList.remove('hidden');
-            document.getElementById('rewardList').innerText = "Borçlarım: " + wonRewards.join(" + ");
+            
+            const list = document.getElementById('rewardList');
+            wonRewards.forEach(reward => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center space-x-2';
+                item.innerHTML = `<span>✅</span> <span>${reward}</span>`;
+                list.appendChild(item);
+            });
             
             confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
+                particleCount: 200,
+                spread: 90,
+                origin: { y: 0.6 },
+                colors: ['#fb7185', '#f472b6', '#ffffff']
             });
         }
     </script>
