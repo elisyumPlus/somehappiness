@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Özel Bir Davet</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -14,11 +15,26 @@
             transition: background 0.8s ease;
         }
 
+        /* Yüzen arka plan objeleri */
+        .floating-bg {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: 0;
+            animation: move-bg 15s linear infinite;
+        }
+
+        @keyframes move-bg {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
+
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 182, 193, 0.2);
             box-shadow: 0 20px 50px rgba(255, 182, 193, 0.15);
+            z-index: 10;
         }
 
         .note-area {
@@ -62,16 +78,15 @@
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-12px); }
         }
-
-        .text-glow {
-            text-shadow: 0 0 15px rgba(251, 113, 133, 0.2);
-        }
     </style>
 </head>
-<body class="h-screen flex items-center justify-center p-6">
+<body class="h-screen flex items-center justify-center p-6 relative">
+
+    <!-- Arka plan süslemeleri -->
+    <div id="bgDecor"></div>
 
     <!-- Sayfa 1: Giriş -->
-    <div id="page1" class="page max-w-md w-full p-8 text-center fade-slide-up">
+    <div id="page1" class="page max-w-md w-full p-8 text-center fade-slide-up relative z-10">
         <div class="mb-10 floating text-8xl">🎁</div>
         <h1 class="text-3xl font-semibold text-gray-800 mb-4 tracking-tight">Sana özel bir davetim var...</h1>
         <p class="text-gray-500 mb-10 font-light">Küçük bir sürprize hazır mısın?</p>
@@ -81,12 +96,11 @@
     </div>
 
     <!-- Sayfa 2: Teklif -->
-    <div id="page2" class="page hidden max-w-xl w-full p-4 text-center fade-slide-up">
+    <div id="page2" class="page hidden max-w-xl w-full p-4 text-center fade-slide-up relative z-10">
         <div class="glass-card rounded-[3rem] p-10 md:p-14 relative flex flex-col items-center overflow-hidden min-h-[580px] justify-center">
             <div id="iconContainer" class="mb-6 text-7xl transition-all duration-700">☕</div>
             <h2 id="mainQuestion" class="text-3xl font-bold text-gray-800 mb-6 tracking-tight">Benimle bir kahve içmeye ne dersin?</h2>
             
-            <!-- Daha şık not alanı -->
             <div class="note-area w-full max-w-xs mb-12 flex items-center justify-center">
                 <p id="subText" class="text-rose-500 font-medium leading-relaxed italic text-lg transition-all duration-300">
                     Seninle harika vakit geçireceğimize eminim! ✨
@@ -94,7 +108,7 @@
             </div>
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-8 relative w-full" id="buttonContainer">
-                <button id="yesBtn" onclick="nextPage(3)" class="btn-transition bg-rose-400 hover:bg-rose-500 text-white px-14 py-4 rounded-3xl font-bold shadow-xl shadow-rose-200 whitespace-nowrap">
+                <button id="yesBtn" onclick="handleYes()" class="btn-transition bg-rose-400 hover:bg-rose-500 text-white px-14 py-4 rounded-3xl font-bold shadow-xl shadow-rose-200 whitespace-nowrap">
                     EVET
                 </button>
                 <button id="noBtn" onclick="handleNoClick()" class="btn-transition bg-gray-50 text-gray-400 px-12 py-4 rounded-3xl font-medium whitespace-nowrap border border-gray-100">
@@ -105,7 +119,7 @@
     </div>
 
     <!-- Sayfa 3: Sonuç -->
-    <div id="page3" class="page hidden max-w-md w-full p-8 text-center fade-slide-up">
+    <div id="page3" class="page hidden max-w-md w-full p-8 text-center fade-slide-up relative z-10">
         <div class="mb-10 text-9xl">💖</div>
         <h1 class="text-4xl font-bold text-gray-800 mb-4 tracking-tighter">Harika!</h1>
         <p class="text-gray-600 mb-10 text-lg font-light leading-relaxed">Bu nazik kabulün beni çok mutlu etti. <br> En kısa zamanda görüşmek üzere! ✨</p>
@@ -135,6 +149,22 @@
 
         const icons = ["☕", "🧁", "🧸", "🐥", "💝", "🥺", "✨", "🎀", "🎈", "🌸", "⭐", "❤️"];
 
+        // Arka plan süslemesi oluşturma
+        function createBgDecor() {
+            const container = document.getElementById('bgDecor');
+            const items = ['🌸', '✨', '☕', '💖', '🍭'];
+            for (let i = 0; i < 15; i++) {
+                const span = document.createElement('span');
+                span.className = 'floating-bg text-2xl';
+                span.innerText = items[Math.floor(Math.random() * items.length)];
+                span.style.left = Math.random() * 100 + 'vw';
+                span.style.animationDelay = Math.random() * 5 + 's';
+                span.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                container.appendChild(span);
+            }
+        }
+        createBgDecor();
+
         function nextPage(pageNumber) {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             const targetPage = document.getElementById(`page${pageNumber}`);
@@ -142,7 +172,21 @@
             
             if(pageNumber === 3) {
                 document.body.style.background = "linear-gradient(135deg, #fff0f3 0%, #ffe4e8 100%)";
+                fireConfetti();
             }
+        }
+
+        function fireConfetti() {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#fb7185', '#fda4af', '#fecdd3', '#ffffff']
+            });
+        }
+
+        function handleYes() {
+            nextPage(3);
         }
 
         function handleNoClick() {
@@ -164,17 +208,13 @@
             }
 
             noClicks++;
-
-            // Zarif büyüme oranı
             yesScale += 0.38;
             yesBtn.style.transform = `scale(${yesScale})`;
 
-            // Hayır butonuna doğru yaklaşma (Daha yumuşak)
             if (window.innerWidth > 640) {
                 yesBtn.style.marginRight = `-${noClicks * 12}px`;
             }
 
-            // 14. tıklamada tam kaplama
             if (noClicks >= 14) {
                 noBtn.style.opacity = "0";
                 noBtn.style.pointerEvents = "none";
