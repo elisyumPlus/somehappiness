@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barışma Sanatı - Araç Seti</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #fffafb;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --accent: #fb7185;
+            --eternity-bg: #fff1f2;
+        }
+
+        .dark-theme {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #f472b6;
+            --eternity-bg: #1e1b4b;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .cursive {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .announcement-banner {
+            background: linear-gradient(90deg, #fb7185, #f472b6);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 113, 133, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(251, 113, 133, 0.15);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        .copy-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            display: none;
+            z-index: 100;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .eternity-section {
+            background-color: var(--eternity-bg);
+            transition: background-color 0.5s ease;
+        }
+
+        /* Floating Bubble Animation */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .name-bubble {
+            animation: float 4s ease-in-out infinite;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Tema Değiştirme Butonu -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-full shadow-2xl border border-rose-200 flex items-center justify-center transition-all hover:scale-110">
+            <span id="themeIcon" class="text-2xl">🌙</span>
+        </div>
+    </div>
+
+    <!-- Duyuru Baloncuğu -->
+    <div class="announcement-banner text-white py-3 px-4 text-center sticky top-0 z-50 shadow-md">
+        <p class="text-sm md:text-base font-medium">
+            ✨ Ücretsiz site yaptırmak isteyenler için: <span class="font-bold underline">Instagram: yusfyl3</span>
+        </p>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="py-20 px-6 text-center transition-colors">
+        <div class="inline-block px-4 py-1.5 mb-6 rounded-full bg-rose-100 text-rose-500 text-xs font-bold uppercase tracking-widest text-nowrap">Aramızdaki Buzları Eritelim</div>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tighter">Barışma Sanatı 💖</h1>
+        <p class="max-w-2xl mx-auto text-lg opacity-80" style="color: var(--text-muted)">Sevgilini mi üzdün? Kendini affettirmenin en modern ve etkileyici yolları burada.</p>
+    </header>
+
+    <!-- Menü Grid -->
+    <main class="max-w-7xl mx-auto py-12 px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Seçenek 1: Özel Bir Davet -->
+            <div class="glass-card p-8 rounded-[2.5rem] flex flex-col h-full">
+                <div class="text-5xl mb-6">💌</div>
+                <h3 class="text-lg font-bold mb-2">Özel Bir Davet</h3>
+                <p class="text-sm mb-6 flex-grow opacity-70" style="color: var(--text-muted)">Klasik ama etkili. "Hayır" butonundan kaçan interaktif bir teklif sayfası.</p>
+                <div class="flex flex-col gap-2">
+                    <button onclick="copyLink('coffy.html')" class="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-500 py-3 rounded-xl font-semibold text-sm hover:bg-rose-100 transition-colors">📎 Kopyala</button>
+                    <a href="barisma_teklifi.html" target="_blank" class="w-full bg-rose-500 text-white py-3 rounded-xl font-semibold text-sm text-center hover:bg-rose-600">Önizle</a>
+                </div>
+            </div>
+
+            <!-- Seçenek 2: Barışma Yolculuğu -->
+            <div class="glass-card p-8 rounded-[2.5rem] flex flex-col h-full">
+                <div class="text-5xl mb-6">🏔️</div>
+                <h3 class="text-lg font-bold mb-2">Barışma Yolculuğu 💖</h3>
+                <p class="text-sm mb-6 flex-grow opacity-70" style="color: var(--text-muted)">Duygusal aşamalar ve interaktif buz kırma oyunu içeren etkileyici bir deneyim.</p>
+                <div class="flex flex-col gap-2">
+                    <button onclick="copyLink('peace.html')" class="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-500 py-3 rounded-xl font-semibold text-sm hover:bg-rose-100 transition-colors">📎 Kopyala</button>
+                    <a href="barisma_yolculugu_v1.html" target="_blank" class="w-full bg-rose-500 text-white py-3 rounded-xl font-semibold text-sm text-center hover:bg-rose-600">Önizle</a>
+                </div>
+            </div>
+
+            <!-- Seçenek 3: Sonsuz Hatıra Yolculuğu -->
+            <div class="glass-card p-8 rounded-[2.5rem] flex flex-col h-full border-2 border-rose-400 relative">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-rose-500 text-white text-[10px] font-bold px-4 py-1 rounded-full uppercase shadow-lg">En Popüler</div>
+                <div class="text-5xl mb-6">✨</div>
+                <h3 class="text-lg font-bold mb-2 text-rose-500">Sonsuz Hatıra Yolculuğu 💖</h3>
+                <p class="text-sm mb-6 flex-grow opacity-70" style="color: var(--text-muted)">Tamamen kişiselleştirilmiş, isimlerinize ve anılarınıza özel yazılan derin bir hikaye.</p>
+                <div class="flex flex-col gap-2">
+                    <button onclick="copyLink('forgive.html')" class="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-500 py-3 rounded-xl font-semibold text-sm hover:bg-rose-100 transition-colors">📎 Kopyala</button>
+                    <a href="barisma_yolculugu.html" target="_blank" class="w-full bg-rose-500 text-white py-3 rounded-xl font-semibold text-sm text-center hover:bg-rose-600">Önizle</a>
+                </div>
+            </div>
+
+            <!-- Seçenek 4: Gönül Alma Çarkı -->
+            <div class="glass-card p-8 rounded-[2.5rem] flex flex-col h-full">
+                <div class="text-5xl mb-6">🎡</div>
+                <h3 class="text-lg font-bold mb-2">Gönül Alma Çarkı 🎡</h3>
+                <p class="text-sm mb-6 flex-grow opacity-70" style="color: var(--text-muted)">Oyun dolu bir barışma. Sevgiliniz çarkı çevirsin ve ödülünü/cezasını kendi belirlesin.</p>
+                <div class="flex flex-col gap-2">
+                    <button onclick="copyLink('sorry.html')" class="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-500 py-3 rounded-xl font-semibold text-sm hover:bg-rose-100 transition-colors">📎 Kopyala</button>
+                    <a href="barisma_carki.html" target="_blank" class="w-full bg-rose-500 text-white py-3 rounded-xl font-semibold text-sm text-center hover:bg-rose-600">Önizle</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Sonsuzluk Köşesi (Geliştirilmiş) -->
+    <section class="eternity-section py-20 px-6 border-y border-rose-100 transition-colors relative overflow-hidden">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="mb-12">
+                <p class="text-rose-400 font-bold text-xs uppercase tracking-widest mb-4">✨ Sonsuzluk Köşesi ✨</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">İsimler Koda Gömülür ve Silinmez</h2>
+                <p class="text-sm opacity-70 max-w-lg mx-auto mb-10" style="color: var(--text-muted)">
+                    Sende ismini bu dijital sonsuzluğa yazdırmak istersen sosyal medya üzerinden iletişime geç!
+                </p>
+                
+                <!-- Belirgin Sosyal Medya Butonları -->
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="https://instagram.com/yusfyl3" target="_blank" class="flex items-center gap-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg shadow-pink-200">
+                        <i class="fab fa-instagram text-2xl"></i>
+                        <div class="text-left">
+                            <span class="block text-[10px] opacity-80 uppercase leading-none">Takip Et</span>
+                            <span class="text-base">yusfyl3</span>
+                        </div>
+                    </a>
+                    <a href="#" target="_blank" class="flex items-center gap-3 bg-black text-white px-8 py-4 rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg shadow-gray-400">
+                        <i class="fab fa-tiktok text-2xl"></i>
+                        <div class="text-left">
+                            <span class="block text-[10px] opacity-80 uppercase leading-none">Abone Ol</span>
+                            <span class="text-base">yusfyl3</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Farklı Balonlarda İsimler -->
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 mt-16">
+                
+                <!-- Balon 1: Yusuf & Esila -->
+                <div class="name-bubble" style="animation-delay: 0s;">
+                    <div class="glass-card px-10 py-6 rounded-[2.5rem] border-2 border-rose-300 shadow-xl relative">
+                        <div class="text-rose-500 cursive text-4xl md:text-5xl>Bazen Aşık Olmak İstersin Ama Kimse Karşına Çıkmaz</div>
+                        <div class="text-[9px] font-bold uppercase tracking-widest opacity-40 mt-2">Bazen Aşık Olmak İstersin Ama Kimse Karşına Çıkmaz</div>
+                        <div class="absolute -top-2 -right-2 text-xl">❤️</div>
+                    </div>
+                </div>
+
+                <!-- Balon 2: Murat & Ayşe -->
+                <div class="name-bubble" style="animation-delay: 1.5s;">
+                    <div class="glass-card px-10 py-6 rounded-[2.5rem] border-2 border-blue-300 shadow-xl relative">
+                        <div class="text-blue-500 cursive text-4xl md:text-5xl">Belkide Olması Gereken Odur</div>
+                        <div class="text-[9px] font-bold uppercase tracking-widest opacity-40 mt-2">Bir Ömür Boyu</div>
+                        <div class="absolute -top-2 -right-2 text-xl">💙</div>
+                    </div>
+                </div>
+
+                <!-- Yeni baloncuk eklemek için yukarıdaki blokları kopyalayabilirsin -->
+            </div>
+        </div>
+
+        <!-- Dekoratif Arka Plan Işıkları -->
+        <div class="absolute top-1/4 left-0 w-64 h-64 bg-rose-300/10 blur-[100px] rounded-full"></div>
+        <div class="absolute bottom-1/4 right-0 w-64 h-64 bg-blue-300/10 blur-[100px] rounded-full"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 text-center opacity-60">
+        <p class="text-xs uppercase tracking-widest font-bold">Instagram: yusfyl3</p>
+        <p class="text-[10px] mt-2 italic">Aşkla tasarlandı ❤️</p>
+    </footer>
+
+    <!-- Kopyalandı Bildirimi -->
+    <div id="copyNotify" class="copy-notification font-semibold text-sm">
+        ✨ Dosya adı kopyalandı!
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                icon.innerText = '☀️';
+            } else {
+                icon.innerText = '🌙';
+            }
+        }
+
+        function copyLink(filename) {
+            const tempInput = document.createElement('input');
+            tempInput.value = filename;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const notify = document.getElementById('copyNotify');
+            notify.style.display = 'block';
+            setTimeout(() => {
+                notify.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
