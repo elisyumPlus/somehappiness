@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özel Bir Davet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff5f7 0%, #fff0f3 100%);
+            overflow: hidden;
+            transition: background 0.8s ease;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            box-shadow: 0 20px 50px rgba(255, 182, 193, 0.15);
+        }
+
+        .note-area {
+            background: rgba(255, 241, 242, 0.5);
+            border-radius: 1.5rem;
+            border: 1px dashed rgba(251, 113, 133, 0.3);
+            padding: 1.5rem;
+            min-height: 5rem;
+            transition: all 0.5s ease;
+        }
+
+        .btn-transition {
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #yesBtn {
+            z-index: 50;
+            position: relative;
+            transform-origin: center;
+        }
+
+        #noBtn {
+            z-index: 10;
+            position: relative;
+        }
+
+        .fade-slide-up {
+            animation: fadeSlideUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .floating {
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 15px rgba(251, 113, 133, 0.2);
+        }
+    </style>
+</head>
+<body class="h-screen flex items-center justify-center p-6">
+
+    <!-- Sayfa 1: Giriş -->
+    <div id="page1" class="page max-w-md w-full p-8 text-center fade-slide-up">
+        <div class="mb-10 floating text-8xl">🎁</div>
+        <h1 class="text-3xl font-semibold text-gray-800 mb-4 tracking-tight">Sana özel bir davetim var...</h1>
+        <p class="text-gray-500 mb-10 font-light">Küçük bir sürprize hazır mısın?</p>
+        <button onclick="nextPage(2)" class="bg-rose-400 hover:bg-rose-500 text-white px-12 py-4 rounded-full font-medium shadow-lg shadow-rose-200 transition-all hover:scale-105 active:scale-95">
+            Sürprizi Aç
+        </button>
+    </div>
+
+    <!-- Sayfa 2: Teklif -->
+    <div id="page2" class="page hidden max-w-xl w-full p-4 text-center fade-slide-up">
+        <div class="glass-card rounded-[3rem] p-10 md:p-14 relative flex flex-col items-center overflow-hidden min-h-[580px] justify-center">
+            <div id="iconContainer" class="mb-6 text-7xl transition-all duration-700">☕</div>
+            <h2 id="mainQuestion" class="text-3xl font-bold text-gray-800 mb-6 tracking-tight">Benimle bir kahve içmeye ne dersin?</h2>
+            
+            <!-- Daha şık not alanı -->
+            <div class="note-area w-full max-w-xs mb-12 flex items-center justify-center">
+                <p id="subText" class="text-rose-500 font-medium leading-relaxed italic text-lg transition-all duration-300">
+                    Seninle harika vakit geçireceğimize eminim! ✨
+                </p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-8 relative w-full" id="buttonContainer">
+                <button id="yesBtn" onclick="nextPage(3)" class="btn-transition bg-rose-400 hover:bg-rose-500 text-white px-14 py-4 rounded-3xl font-bold shadow-xl shadow-rose-200 whitespace-nowrap">
+                    EVET
+                </button>
+                <button id="noBtn" onclick="handleNoClick()" class="btn-transition bg-gray-50 text-gray-400 px-12 py-4 rounded-3xl font-medium whitespace-nowrap border border-gray-100">
+                    Hayır
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sayfa 3: Sonuç -->
+    <div id="page3" class="page hidden max-w-md w-full p-8 text-center fade-slide-up">
+        <div class="mb-10 text-9xl">💖</div>
+        <h1 class="text-4xl font-bold text-gray-800 mb-4 tracking-tighter">Harika!</h1>
+        <p class="text-gray-600 mb-10 text-lg font-light leading-relaxed">Bu nazik kabulün beni çok mutlu etti. <br> En kısa zamanda görüşmek üzere! ✨</p>
+        <div class="inline-block px-6 py-2 bg-rose-50 text-rose-400 rounded-full text-sm font-medium border border-rose-100">
+            Ekran görüntüsü alabilirsin 📸
+        </div>
+    </div>
+
+    <script>
+        let yesScale = 1;
+        let noClicks = 0;
+
+        const messages = [
+            "Emin misin? ✨",
+            "Sadece kısa bir mola? 🥺",
+            "Kırmasan beni çok sevinirim... 🌸",
+            "Bak, Evet butonu sana yaklaşıyor!",
+            "Seni çok mutlu edebilirim... 🤗",
+            "Hala mı hayır? Kalbim çıt... 😿",
+            "Sohbetimiz unutulmaz olacak! 🕊️",
+            "Küçük bir şans versen? ✨",
+            "Gülüşün bir kahveye değmez mi? 🍭",
+            "Evet demek üzeresin sanki... 🥰",
+            "Hadi, en güzel kararı verelim! 🎀",
+            "Seni beklemek bile güzel... ❤️"
+        ];
+
+        const icons = ["☕", "🧁", "🧸", "🐥", "💝", "🥺", "✨", "🎀", "🎈", "🌸", "⭐", "❤️"];
+
+        function nextPage(pageNumber) {
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            const targetPage = document.getElementById(`page${pageNumber}`);
+            targetPage.classList.remove('hidden');
+            
+            if(pageNumber === 3) {
+                document.body.style.background = "linear-gradient(135deg, #fff0f3 0%, #ffe4e8 100%)";
+            }
+        }
+
+        function handleNoClick() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const subText = document.getElementById('subText');
+            const iconContainer = document.getElementById('iconContainer');
+            
+            if (noClicks < messages.length) {
+                subText.style.opacity = 0;
+                subText.style.transform = "translateY(-10px)";
+                
+                setTimeout(() => {
+                    subText.innerText = messages[noClicks];
+                    iconContainer.innerText = icons[noClicks];
+                    subText.style.opacity = 1;
+                    subText.style.transform = "translateY(0px)";
+                }, 300);
+            }
+
+            noClicks++;
+
+            // Zarif büyüme oranı
+            yesScale += 0.38;
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            // Hayır butonuna doğru yaklaşma (Daha yumuşak)
+            if (window.innerWidth > 640) {
+                yesBtn.style.marginRight = `-${noClicks * 12}px`;
+            }
+
+            // 14. tıklamada tam kaplama
+            if (noClicks >= 14) {
+                noBtn.style.opacity = "0";
+                noBtn.style.pointerEvents = "none";
+                
+                yesBtn.style.position = 'fixed';
+                yesBtn.style.top = '0';
+                yesBtn.style.left = '0';
+                yesBtn.style.width = '100vw';
+                yesBtn.style.height = '100vh';
+                yesBtn.style.transform = 'none';
+                yesBtn.style.borderRadius = '0';
+                yesBtn.style.zIndex = '999';
+                yesBtn.style.fontSize = '3rem';
+                yesBtn.style.display = 'flex';
+                yesBtn.style.alignItems = 'center';
+                yesBtn.style.justifyContent = 'center';
+                yesBtn.innerHTML = 'O ZAMAN KAHVEYE GİDİYORUZ! ❤️';
+            }
+        }
+    </script>
+</body>
+</html>
