@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gönül Alma Çarkı 🎡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fff5f7;
+            overflow-x: hidden;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        #wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marker {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid #fb7185;
+            z-index: 20;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 2.5rem;
+            box-shadow: 0 20px 50px rgba(251, 113, 133, 0.15);
+        }
+
+        .slice {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+
+    <div id="gameContainer" class="glass-card max-w-md w-full p-8 text-center relative overflow-hidden">
+        
+        <!-- Giriş Ekranı -->
+        <div id="intro">
+            <div class="text-6xl mb-6">🎡</div>
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">Gönül Alma Çarkı</h1>
+            <p class="text-gray-500 mb-8">Hatalıyım biliyorum... Affedilmek için her şeye hazırım. Çarkı çevir ve kaderimi sen belirle!</p>
+            <button onclick="startGame()" class="bg-rose-500 text-white px-10 py-4 rounded-2xl font-bold shadow-lg hover:bg-rose-600 transition-all">
+                Çevirmeye Başla ✨
+            </button>
+        </div>
+
+        <!-- Çark Ekranı -->
+        <div id="wheelScreen" class="hidden">
+            <div class="marker"></div>
+            <div class="wheel-container mb-8">
+                <div id="wheel"></div>
+            </div>
+            
+            <div id="resultArea" class="h-16 flex items-center justify-center mb-6">
+                <p id="resultText" class="text-rose-500 font-semibold text-lg italic">Gönlünü almak için ne yapmalıyım?</p>
+            </div>
+
+            <button id="spinBtn" onclick="spinWheel()" class="bg-rose-500 text-white px-12 py-4 rounded-2xl font-bold shadow-lg hover:bg-rose-600 transition-all disabled:bg-gray-300">
+                ÇARK'I ÇEVİR 🎲
+            </button>
+
+            <div id="finalAction" class="hidden mt-6 animate-bounce">
+                <button onclick="finishGame()" class="bg-emerald-500 text-white px-12 py-4 rounded-2xl font-bold shadow-lg hover:bg-emerald-600 transition-all">
+                    TAMAM, AFFETTİM ❤️
+                </button>
+            </div>
+        </div>
+
+        <!-- Final Ekranı -->
+        <div id="outro" class="hidden">
+            <div class="text-8xl mb-6">💖</div>
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Yaşasın!</h1>
+            <p class="text-gray-600 mb-6">Çıkan tüm sözleri tutmaya hazırım. Seni çok seviyorum ve bir daha üzmeyeceğim!</p>
+            <div id="rewardList" class="bg-rose-50 p-4 rounded-xl text-rose-600 font-medium text-sm italic"></div>
+        </div>
+    </div>
+
+    <script>
+        const rewards = [
+            "En Sevdiğin Yemek 🍕",
+            "1 Saat Masaj 💆‍♀️",
+            "Sınırsız İltifat ✨",
+            "Alışveriş Günü 🛍️",
+            "Romantik Akşam Yemeği 🕯️",
+            "Film Gecesi + Patlamış Mısır 🍿",
+            "Ömür Boyu Sadakat ❤️",
+            "En Sevdiğin Tatlı 🍰"
+        ];
+
+        const colors = ['#fb7185', '#f472b6', '#fb7185', '#f472b6', '#fb7185', '#f472b6', '#fb7185', '#f472b6'];
+        let currentRotation = 0;
+        let spinCount = 0;
+        let wonRewards = [];
+
+        function startGame() {
+            document.getElementById('intro').classList.add('hidden');
+            document.getElementById('wheelScreen').classList.remove('hidden');
+            setupWheel();
+        }
+
+        function setupWheel() {
+            const wheel = document.getElementById('wheel');
+            const sliceDeg = 360 / rewards.length;
+            
+            rewards.forEach((text, i) => {
+                const slice = document.createElement('div');
+                slice.className = 'slice';
+                slice.style.backgroundColor = colors[i];
+                slice.style.transform = `rotate(${i * sliceDeg}deg) skewY(${90 - sliceDeg}deg)`;
+                
+                const textSpan = document.createElement('span');
+                textSpan.innerText = text;
+                textSpan.style.transform = `skewY(-${90 - sliceDeg}deg) rotate(${sliceDeg/2}deg) translateY(-20px)`;
+                textSpan.style.position = 'absolute';
+                textSpan.style.right = '10px';
+                textSpan.style.bottom = '10px';
+                textSpan.style.width = '80px';
+                
+                slice.appendChild(textSpan);
+                wheel.appendChild(slice);
+            });
+        }
+
+        function spinWheel() {
+            const spinBtn = document.getElementById('spinBtn');
+            const resultText = document.getElementById('resultText');
+            spinBtn.disabled = true;
+            
+            const extraDeg = Math.floor(Math.random() * 360) + 720; // En az 2 tam tur
+            currentRotation += extraDeg;
+            
+            document.getElementById('wheel').style.transform = `rotate(${currentRotation}deg)`;
+            
+            setTimeout(() => {
+                const actualDeg = currentRotation % 360;
+                const sliceIndex = Math.floor(((360 - actualDeg) % 360) / (360 / rewards.length));
+                const win = rewards[sliceIndex];
+                
+                resultText.innerText = `Kazandın: ${win}! 🎁`;
+                if(!wonRewards.includes(win)) wonRewards.push(win);
+                
+                spinCount++;
+                spinBtn.disabled = false;
+                spinBtn.innerText = "TEKRAR ÇEVİR 🔄";
+
+                if(spinCount >= 2) {
+                    document.getElementById('finalAction').classList.remove('hidden');
+                }
+            }, 4000);
+        }
+
+        function finishGame() {
+            document.getElementById('wheelScreen').classList.add('hidden');
+            document.getElementById('outro').classList.remove('hidden');
+            document.getElementById('rewardList').innerText = "Borçlarım: " + wonRewards.join(" + ");
+            
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+    </script>
+</body>
+</html>
