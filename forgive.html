@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonsuz Hatıra Yolculuğu 💖</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose-primary: #fb7185;
+            --rose-light: #fff5f7;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--rose-light);
+            overflow-x: hidden;
+            transition: all 1.5s ease;
+        }
+
+        .cursive {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(251, 113, 133, 0.1);
+            box-shadow: 0 30px 100px rgba(251, 113, 133, 0.15);
+            border-radius: 3rem;
+        }
+
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+
+        .input-focus:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(251, 113, 133, 0.1);
+        }
+
+        .step-node {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 10;
+        }
+
+        .progress-line-bg {
+            position: absolute;
+            height: 4px;
+            background: #ffe4e6;
+            z-index: 5;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .progress-line-fill {
+            position: absolute;
+            height: 4px;
+            background: var(--rose-primary);
+            z-index: 6;
+            width: 0%;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: width 1.2s ease;
+        }
+
+        .ice-block {
+            background: rgba(219, 234, 254, 0.6);
+            border: 2px solid rgba(191, 219, 254, 0.8);
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .ice-block:active {
+            transform: scale(0.92);
+        }
+
+        .floating-heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float-up 4s linear forwards;
+            z-index: 50;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid var(--rose-primary);
+            white-space: normal;
+            margin: 0 auto;
+            letter-spacing: .05em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--rose-primary); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div id="mainContainer" class="glass-card max-w-lg w-full p-8 md:p-12 text-center relative overflow-hidden">
+        
+        <!-- Bölüm 0: Modern Bilgi Girişi -->
+        <div id="setupScreen" class="space-y-6">
+            <div class="mb-8">
+                <span class="inline-block p-4 bg-rose-50 rounded-3xl mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                </span>
+                <h1 class="text-3xl font-bold text-gray-800">Bize Özel Bir Hikaye</h1>
+                <p class="text-gray-500 mt-2">Her şeyi düzeltmeye hazır mısın?</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-rose-400 uppercase tracking-widest ml-2">Senin İsmin</label>
+                    <input type="text" id="myName" placeholder="Can" class="input-focus w-full px-5 py-4 rounded-2xl bg-white border border-gray-100 focus:border-rose-300 focus:outline-none shadow-sm text-gray-700">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-rose-400 uppercase tracking-widest ml-2">O'nun İsmi</label>
+                    <input type="text" id="partnerName" placeholder="Canan" class="input-focus w-full px-5 py-4 rounded-2xl bg-white border border-gray-100 focus:border-rose-300 focus:outline-none shadow-sm text-gray-700">
+                </div>
+                <div class="space-y-1 md:col-span-2">
+                    <label class="text-[10px] font-bold text-rose-400 uppercase tracking-widest ml-2">En Güzel Aktiviteniz</label>
+                    <input type="text" id="favActivity" placeholder="Yağmurda sahilde yürümek..." class="input-focus w-full px-5 py-4 rounded-2xl bg-white border border-gray-100 focus:border-rose-300 focus:outline-none shadow-sm text-gray-700">
+                </div>
+                <div class="space-y-1 md:col-span-2">
+                    <label class="text-[10px] font-bold text-rose-400 uppercase tracking-widest ml-2">Mucizenin Başladığı Tarih</label>
+                    <input type="text" id="startDate" placeholder="14 Şubat 2021" class="input-focus w-full px-5 py-4 rounded-2xl bg-white border border-gray-100 focus:border-rose-300 focus:outline-none shadow-sm text-gray-700">
+                </div>
+            </div>
+
+            <button onclick="saveAndStart()" class="w-full mt-6 bg-gradient-to-r from-rose-400 to-rose-500 text-white py-5 rounded-2xl font-bold shadow-xl shadow-rose-200 hover:shadow-rose-300 transition-all hover:scale-[1.02] active:scale-95">
+                Yolculuğu Başlat ✨
+            </button>
+        </div>
+
+        <!-- Bölüm 1: Giriş -->
+        <div id="startScreen" class="hidden animate-in fade-in duration-1000">
+            <div class="text-8xl mb-8">🧸</div>
+            <h1 class="text-3xl font-bold text-gray-800 mb-4 cursive text-5xl">Merhaba sevgilim...</h1>
+            <p id="welcomeMsg" class="text-gray-500 mb-10 text-lg leading-relaxed"></p>
+            <button onclick="startJourney()" class="bg-rose-500 text-white px-12 py-5 rounded-full font-bold shadow-lg hover:bg-rose-600 transition-all pulse-pink">
+                Yola Çıkalım ✨
+            </button>
+        </div>
+
+        <!-- Bölüm 2: Yolculuk Durakları -->
+        <div id="journeyScreen" class="hidden">
+            <div class="flex items-center justify-between mb-12">
+                <h2 class="text-sm font-bold text-rose-400 uppercase tracking-tighter">Anılar Labirenti</h2>
+                <span id="stepCounter" class="text-xs font-medium text-gray-400">Durak 1/4</span>
+            </div>
+            
+            <div class="relative h-20 flex items-center justify-between px-2 mb-16">
+                <div class="progress-line-bg"></div>
+                <div id="progressLine" class="progress-line-fill"></div>
+
+                <div id="step1" class="step-node bg-rose-500 text-white ring-8 ring-rose-50 shadow-lg">1</div>
+                <div id="step2" class="step-node bg-white text-gray-300 border border-gray-100">2</div>
+                <div id="step3" class="step-node bg-white text-gray-300 border border-gray-100">3</div>
+                <div id="step4" class="step-node bg-white text-gray-300 border border-gray-100">🏁</div>
+            </div>
+
+            <div class="min-h-[200px] flex items-center justify-center">
+                <p id="contentArea" class="cursive text-3xl text-gray-700 leading-relaxed px-4"></p>
+            </div>
+
+            <button id="nextBtn" onclick="nextStep()" class="mt-12 w-full bg-rose-500 text-white py-5 rounded-2xl font-bold shadow-lg hover:bg-rose-600 transition-all">
+                Hatırlamaya Devam Et →
+            </button>
+        </div>
+
+        <!-- Bölüm 3: Buz Eritme -->
+        <div id="iceScreen" class="hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Aramızdaki Son Buz</h2>
+            <p id="meltMsg" class="text-gray-400 text-sm mb-10"></p>
+            
+            <div class="relative mb-12">
+                <div id="iceBlock" onclick="meltIce()" class="ice-block w-48 h-48 rounded-[3rem] mx-auto flex items-center justify-center text-7xl shadow-xl transition-all duration-300">
+                    🧊
+                </div>
+                <div id="meltParticles" class="absolute inset-0 pointer-events-none"></div>
+            </div>
+
+            <div class="space-y-2">
+                <div class="flex justify-between text-[10px] font-bold text-blue-400 uppercase">
+                    <span>Soğukluk</span>
+                    <span>Sıcaklık</span>
+                </div>
+                <div class="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                    <div id="meltProgress" class="h-full bg-gradient-to-r from-blue-200 to-rose-400 w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bölüm 4: Final -->
+        <div id="finalScreen" class="hidden text-center">
+            <div class="relative inline-block mb-8">
+                <div class="text-9xl">🫂</div>
+                <div class="absolute -top-4 -right-4 text-4xl animate-bounce">✨</div>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Seni Seviyorum</h1>
+            <p id="finalMsg" class="text-gray-600 mb-10 text-lg"></p>
+            
+            <div class="bg-gradient-to-br from-rose-50 to-white p-8 rounded-[2.5rem] border border-rose-100 shadow-inner">
+                <p class="text-rose-500 font-semibold italic">"Dünyanın en şanslı insanıyım çünkü senin kalbindeyim."</p>
+            </div>
+            
+            <button onclick="location.reload()" class="mt-8 text-gray-400 text-xs hover:text-rose-400 transition-colors uppercase tracking-widest font-bold">Yolculuğu Baştan Yaz</button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let meltClicks = 0;
+        const totalMeltNeeded = 12;
+        let userData = {};
+        let stories = [];
+
+        function typeWriter(element, text, speed = 40) {
+            element.innerHTML = "";
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        function saveAndStart() {
+            userData = {
+                myName: document.getElementById('myName').value || "Ben",
+                partnerName: document.getElementById('partnerName').value || "Sevgilim",
+                favActivity: document.getElementById('favActivity').value || "vakit geçirmek",
+                startDate: document.getElementById('startDate').value || "tanıştığımız gün"
+            };
+
+            stories = [
+                `${userData.startDate} günüydü... Gökyüzü o gün seninle daha parlaktı. Kalbim ilk defa bu kadar hızlı atmıştı.`,
+                `Sonra seninle ${userData.favActivity} başladık. O anlarda zaman dursun, sadece biz kalalım istedim.`,
+                `Seni kırmanın pişmanlığı içimde büyük bir boşluk... ${userData.partnerName}, inan bana seni sevmekten hiç vazgeçmedim.`,
+                `Şimdi önümüzde sadece son bir engel kaldı. Kalbindeki o küçük buzu eritip beni tekrar içeri alır mısın?`
+            ];
+
+            const welcome = document.getElementById('welcomeMsg');
+            welcome.innerText = `Seni biraz üzdüğümü biliyorum ${userData.partnerName}. Ama her şeyi düzeltmek, o güzel gülüşünü tekrar görmek için her şeyi yapmaya hazırım.`;
+            
+            document.getElementById('setupScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+            document.body.style.background = "#fff1f2";
+        }
+
+        function startJourney() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('journeyScreen').classList.remove('hidden');
+            typeWriter(document.getElementById('contentArea'), stories[0]);
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                currentStep++;
+                
+                // Progress
+                const progress = (currentStep - 1) / 3 * 100;
+                document.getElementById('progressLine').style.width = progress + '%';
+                
+                // UI Nodes
+                const node = document.getElementById(`step${currentStep}`);
+                node.className = "step-node bg-rose-500 text-white ring-8 ring-rose-50 shadow-lg scale-110";
+                document.getElementById('stepCounter').innerText = `Durak ${currentStep}/4`;
+
+                // Content
+                typeWriter(document.getElementById('contentArea'), stories[currentStep - 1]);
+
+                if (currentStep === 4) {
+                    document.getElementById('nextBtn').innerText = "Son Engeli Kaldır 🔨";
+                    document.getElementById('nextBtn').className = "mt-12 w-full bg-blue-500 text-white py-5 rounded-2xl font-bold shadow-lg hover:bg-blue-600 transition-all";
+                }
+            } else {
+                showIceScreen();
+            }
+        }
+
+        function showIceScreen() {
+            document.getElementById('journeyScreen').classList.add('hidden');
+            document.getElementById('iceScreen').classList.remove('hidden');
+            document.getElementById('meltMsg').innerText = `${userData.partnerName}, kalbindeki son soğukluğu yok etmek için buza tıkla...`;
+            document.body.style.background = "#eff6ff";
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'floating-heart';
+            heart.style.left = (Math.random() * 80 + 10) + 'vw';
+            heart.style.top = '80vh';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+
+        function meltIce() {
+            meltClicks++;
+            const progress = (meltClicks / totalMeltNeeded) * 100;
+            document.getElementById('meltProgress').style.width = progress + '%';
+            
+            const ice = document.getElementById('iceBlock');
+            ice.style.transform = `scale(${1 - (meltClicks * 0.03)}) rotate(${meltClicks * 5}deg)`;
+            ice.style.background = `rgba(251, 113, 133, ${meltClicks / totalMeltNeeded})`;
+            
+            createHeart();
+
+            if (meltClicks >= totalMeltNeeded) {
+                ice.innerText = '💖';
+                ice.style.transform = "scale(1.5)";
+                setTimeout(showFinal, 800);
+            }
+        }
+
+        function showFinal() {
+            document.getElementById('iceScreen').classList.add('hidden');
+            document.getElementById('finalScreen').classList.remove('hidden');
+            document.getElementById('finalMsg').innerText = `Teşekkür ederim ${userData.partnerName}. Buzları erittin ve bana dünyaları verdin. Seni bir daha asla kaybetmeyeceğim.`;
+            document.body.style.background = "linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)";
+            
+            confetti({
+                particleCount: 250,
+                spread: 120,
+                origin: { y: 0.6 },
+                colors: ['#fb7185', '#f472b6', '#ffffff', '#fda4af']
+            });
+        }
+    </script>
+</body>
+</html>
