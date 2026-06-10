@@ -3,275 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barışma Sanatı - Araç Seti</title>
+    <title>Heiss Burger Adisyon Sistemi</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #fffafb;
-            --card-bg: rgba(255, 255, 255, 0.8);
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
-            --accent: #fb7185;
-            --eternity-bg: #fff1f2;
-        }
-
-        .dark-theme {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.8);
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --accent: #f472b6;
-            --eternity-bg: #1e1b4b;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
-
-        .cursive {
-            font-family: 'Dancing Script', cursive;
-        }
-
-        .announcement-banner {
-            background: linear-gradient(90deg, #fb7185, #f472b6);
-            animation: slideDown 0.5s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
-        }
-
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(251, 113, 133, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(251, 113, 133, 0.15);
-        }
-
-        .theme-toggle {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            z-index: 100;
-            cursor: pointer;
-        }
-
-        .copy-notification {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #10b981;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            display: none;
-            z-index: 100;
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
-        }
-
-        .eternity-section {
-            background-color: var(--eternity-bg);
-            transition: background-color 0.5s ease;
-        }
-
-        /* Floating Bubble Animation */
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-
-        .name-bubble {
-            animation: float 4s ease-in-out infinite;
-            display: inline-block;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        /* Özel İnce Scrollbar Tasarımı */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-slate-950">
 
-    <!-- Tema Değiştirme Butonu -->
-    <div class="theme-toggle" onclick="toggleTheme()">
-        <div class="bg-white dark:bg-slate-800 p-4 rounded-full shadow-2xl border border-rose-200 flex items-center justify-center transition-all hover:scale-110">
-            <span id="themeIcon" class="text-2xl">🌙</span>
+    <header class="border-b border-slate-900 bg-slate-900/40 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold tracking-wider text-amber-500">HEISS <span class="text-white font-light">BURGER</span></h1>
+        <div class="flex items-center gap-2 text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Canlı Bağlantı Aktif
         </div>
-    </div>
-
-    <!-- Duyuru Baloncuğu -->
-    <div class="announcement-banner text-white py-3 px-4 text-center sticky top-0 z-50 shadow-md">
-        <p class="text-sm md:text-base font-medium">
-            ✨ Ücretsiz site yaptırmak isteyenler için: <span class="font-bold underline">Instagram: yusfyl3</span>
-        </p>
-    </div>
-
-    <!-- Hero Section -->
-    <header class="py-20 px-6 text-center transition-colors">
-        <div class="inline-block px-4 py-1.5 mb-6 rounded-full bg-rose-100 text-rose-500 text-xs font-bold uppercase tracking-widest text-nowrap">Aramızdaki Buzları Eritelim</div>
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tighter">Barışma Sanatı 💖</h1>
-        <p class="max-w-2xl mx-auto text-lg opacity-80" style="color: var(--text-muted)">Sevgilini mi üzdün? Kendini affettirmenin en modern ve etkileyici yolları burada.</p>
     </header>
 
-    <!-- Menü Grid -->
-    <main class="max-w-7xl mx-auto py-12 px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <main class="flex-1 p-4 md:p-6 grid grid-cols-1 xl:grid-cols-12 gap-6 max-w-[1600px] mx-auto w-full">
+        
+        <section class="xl:col-span-5 space-y-6">
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-semibold text-slate-300">Menü Paneli</h2>
+            </div>
             
-            <!-- Seçenek 1: Özel Bir Davet -->
-            <div class="glass-card p-8 rounded-[2.5rem] flex flex-col h-full">
-                <div class="text-5xl mb-6">💌</div>
-                <h3 class="text-lg font-bold mb-2">Özel Bir Davet</h3>
-                <p class="text-sm mb-6 flex-grow opacity-70" style="color: var(--text-muted)">Klasik ama etkili. "Hayır" butonundan kaçan interaktif bir teklif sayfası.</p>
-                <div class="flex flex-col gap-2">
-                    <button onclick="copyLink('coffy.html')" class="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-500 py-3 rounded-xl font-semibold text-sm hover:bg-rose-100 transition-colors">📎 Kopyala</button>
-                    <a href="coffy.html" target="_blank" class="w-full bg-rose-500 text-white py-3 rounded-xl font-semibold text-sm text-center hover:bg-rose-600">Önizle</a>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">🍔 Burgerler</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        <button onclick="sepeteEkle('Heiss Burger', 180)" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-left transition-all active:scale-95">
+                            <div class="font-medium text-sm text-slate-200">Heiss Burger</div>
+                            <div class="text-xs text-amber-500 mt-1">180.00 ₺</div>
+                        </button>
+                        <button onclick="sepeteEkle('Cheese Burger', 195)" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-left transition-all active:scale-95">
+                            <div class="font-medium text-sm text-slate-200">Cheese Burger</div>
+                            <div class="text-xs text-amber-500 mt-1">195.00 ₺</div>
+                        </button>
+                        <button onclick="sepeteEkle('Double Heiss', 260)" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-left transition-all active:scale-95">
+                            <div class="font-medium text-sm text-slate-200">Double Heiss</div>
+                            <div class="text-xs text-amber-500 mt-1">260.00 ₺</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">🍟 Yan Ürünler</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        <button onclick="sepeteEkle('Patates Kızartması', 70)" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-left transition-all active:scale-95">
+                            <div class="font-medium text-sm text-slate-200">Patates Kırz.</div>
+                            <div class="text-xs text-amber-500 mt-1">70.00 ₺</div>
+                        </button>
+                        <button onclick="sepeteEkle('Soğan Halkası (8li)', 65)" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-left transition-all active:scale-95">
+                            <div class="font-medium text-sm text-slate-200">Soğan Halkası</div>
+                            <div class="text-xs text-amber-500 mt-1">65.00 ₺</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">🥤 İçecekler</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        <button onclick="sepeteEkle('Coca Cola', 45)" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-left transition-all active:scale-95">
+                            <div class="font-medium text-sm text-slate-200">Coca Cola</div>
+                            <div class="text-xs text-amber-500 mt-1">45.00 ₺</div>
+                        </button>
+                        <button onclick="sepeteEkle('Fanta', 45)" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-left transition-all active:scale-95">
+                            <div class="font-medium text-sm text-slate-200">Fanta</div>
+                            <div class="text-xs text-amber-500 mt-1">45.00 ₺</div>
+                        </button>
+                        <button onclick="sepeteEkle('Ayran', 30)" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-left transition-all active:scale-95">
+                            <div class="font-medium text-sm text-slate-200">Ayran</div>
+                            <div class="text-xs text-amber-500 mt-1">30.00 ₺</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="xl:col-span-3 bg-slate-900/40 border border-slate-900 rounded-2xl p-4 flex flex-col justify-between h-[calc(100vh-140px)] sticky top-24">
+            <div>
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-base font-semibold text-slate-300">Adisyon Detayı</h2>
+                    <button onclick="sepetiTemizle()" class="text-xs text-rose-400 hover:underline">Temizle</button>
+                </div>
+
+                <div class="mb-4">
+                    <input type="text" id="table-no" placeholder="Masa No (Örn: Masa 3)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors">
+                </div>
+
+                <div id="sepet-listesi" class="space-y-2 overflow-y-auto max-h-[calc(100vh-420px)] pr-1">
+                    <div class="text-center py-8 text-xs text-slate-500">Henüz ürün seçilmedi.</div>
                 </div>
             </div>
 
-            <!-- Seçenek 2: Barışma Yolculuğu -->
-            <div class="glass-card p-8 rounded-[2.5rem] flex flex-col h-full">
-                <div class="text-5xl mb-6">🏔️</div>
-                <h3 class="text-lg font-bold mb-2">Barışma Yolculuğu 💖</h3>
-                <p class="text-sm mb-6 flex-grow opacity-70" style="color: var(--text-muted)">Duygusal aşamalar ve interaktif buz kırma oyunu içeren etkileyici bir deneyim.</p>
-                <div class="flex flex-col gap-2">
-                    <button onclick="copyLink('peace.html')" class="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-500 py-3 rounded-xl font-semibold text-sm hover:bg-rose-100 transition-colors">📎 Kopyala</button>
-                    <a href="peace.html" target="_blank" class="w-full bg-rose-500 text-white py-3 rounded-xl font-semibold text-sm text-center hover:bg-rose-600">Önizle</a>
+            <div class="pt-4 border-t border-slate-800/60 space-y-3">
+                <div class="flex justify-between items-center text-sm px-1">
+                    <span class="text-slate-400">Genel Toplam:</span>
+                    <span id="sepet-topham" class="font-bold text-base text-amber-500">0.00 ₺</span>
                 </div>
+                <button onclick="siparisGonder()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 px-4 rounded-xl transition-colors shadow-lg shadow-amber-500/5 active:scale-[0.98]">
+                    Siparişi Onayla
+                </button>
             </div>
+        </section>
 
-            <!-- Seçenek 3: Sonsuz Hatıra Yolculuğu -->
-            <div class="glass-card p-8 rounded-[2.5rem] flex flex-col h-full border-2 border-rose-400 relative">
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-rose-500 text-white text-[10px] font-bold px-4 py-1 rounded-full uppercase shadow-lg">En Popüler</div>
-                <div class="text-5xl mb-6">✨</div>
-                <h3 class="text-lg font-bold mb-2 text-rose-500">Sonsuz Hatıra Yolculuğu 💖</h3>
-                <p class="text-sm mb-6 flex-grow opacity-70" style="color: var(--text-muted)">Tamamen kişiselleştirilmiş, isimlerinize ve anılarınıza özel yazılan derin bir hikaye.</p>
-                <div class="flex flex-col gap-2">
-                    <button onclick="copyLink('forgive.html')" class="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-500 py-3 rounded-xl font-semibold text-sm hover:bg-rose-100 transition-colors">📎 Kopyala</button>
-                    <a href="forgive.html" target="_blank" class="w-full bg-rose-500 text-white py-3 rounded-xl font-semibold text-sm text-center hover:bg-rose-600">Önizle</a>
-                </div>
+        <section class="xl:col-span-4 space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-semibold text-slate-300">Aktif Adisyonlar</h2>
+                <span id="order-count" class="text-xs bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-md text-slate-400">0 Sipariş</span>
             </div>
-
-            <!-- Seçenek 4: Gönül Alma Çarkı -->
-            <div class="glass-card p-8 rounded-[2.5rem] flex flex-col h-full">
-                <div class="text-5xl mb-6">🎡</div>
-                <h3 class="text-lg font-bold mb-2">Gönül Alma Çarkı 🎡</h3>
-                <p class="text-sm mb-6 flex-grow opacity-70" style="color: var(--text-muted)">Oyun dolu bir barışma. Sevgiliniz çarkı çevirsin ve ödülünü/cezasını kendi belirlesin.</p>
-                <div class="flex flex-col gap-2">
-                    <button onclick="copyLink('sorry.html')" class="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-500 py-3 rounded-xl font-semibold text-sm hover:bg-rose-100 transition-colors">📎 Kopyala</button>
-                    <a href="sorry.html" target="_blank" class="w-full bg-rose-500 text-white py-3 rounded-xl font-semibold text-sm text-center hover:bg-rose-600">Önizle</a>
-                </div>
+            
+            <div id="orders-container" class="grid grid-cols-1 gap-4 overflow-y-auto max-h-[calc(100vh-140px)] pr-1">
+                <div class="py-12 text-center text-slate-500 text-sm">Siparişler yükleniyor...</div>
             </div>
+        </section>
 
-        </div>
     </main>
 
-    <!-- Sonsuzluk Köşesi (Geliştirilmiş) -->
-    <section class="eternity-section py-20 px-6 border-y border-rose-100 transition-colors relative overflow-hidden">
-        <div class="max-w-5xl mx-auto text-center relative z-10">
-            <div class="mb-12">
-                <p class="text-rose-400 font-bold text-xs uppercase tracking-widest mb-4">✨ Sonsuzluk Köşesi ✨</p>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">İsimler Koda Gömülür ve Silinmez</h2>
-                <p class="text-sm opacity-70 max-w-lg mx-auto mb-10" style="color: var(--text-muted)">
-                    Sende ismini bu dijital sonsuzluğa yazdırmak istersen sosyal medya üzerinden iletişime geç!
-                </p>
-                
-                <!-- Belirgin Sosyal Medya Butonları -->
-                <div class="flex flex-wrap justify-center gap-6">
-                    <a href="https://instagram.com/yusfyl3" target="_blank" class="flex items-center gap-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg shadow-pink-200">
-                        <i class="fab fa-instagram text-2xl"></i>
-                        <div class="text-left">
-                            <span class="block text-[10px] opacity-80 uppercase leading-none">Takip Et</span>
-                            <span class="text-base">yusfyl3</span>
-                        </div>
-                    </a>
-                    <a href="#" target="_blank" class="flex items-center gap-3 bg-black text-white px-8 py-4 rounded-2xl font-bold hover:scale-105 transition-transform shadow-lg shadow-gray-400">
-                        <i class="fab fa-tiktok text-2xl"></i>
-                        <div class="text-left">
-                            <span class="block text-[10px] opacity-80 uppercase leading-none">Abone Ol</span>
-                            <span class="text-base">yusfyl3</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Farklı Balonlarda İsimler -->
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 mt-16">
-                
-                <!-- Balon 1: Yusuf & Esila -->
-                <div class="name-bubble" style="animation-delay: 0s;">
-                    <div class="glass-card px-10 py-6 rounded-[2.5rem] border-2 border-rose-300 shadow-xl relative">
-                        <div class="text-rose-500 cursive text-4xl md:text-5xl>Bazen Aşık Olmak İstersin Ama Kimse Karşına Çıkmaz</div>
-                        <div class="text-[9px] font-bold uppercase tracking-widest opacity-40 mt-2">Bazen Aşık Olmak İstersin Ama Kimse Karşına Çıkmaz</div>
-                        <div class="absolute -top-2 -right-2 text-xl">❤️</div>
-                    </div>
-                </div>
-
-                <!-- Balon 2: Murat & Ayşe -->
-                <div class="name-bubble" style="animation-delay: 1.5s;">
-                    <div class="glass-card px-10 py-6 rounded-[2.5rem] border-2 border-blue-300 shadow-xl relative">
-                        <div class="text-blue-500 cursive text-4xl md:text-5xl">Belkide Olması Gereken Odur</div>
-                        <div class="text-[9px] font-bold uppercase tracking-widest opacity-40 mt-2">Bir Ömür Boyu</div>
-                        <div class="absolute -top-2 -right-2 text-xl">💙</div>
-                    </div>
-                </div>
-
-                <!-- Yeni baloncuk eklemek için yukarıdaki blokları kopyalayabilirsin -->
-            </div>
-        </div>
-
-        <!-- Dekoratif Arka Plan Işıkları -->
-        <div class="absolute top-1/4 left-0 w-64 h-64 bg-rose-300/10 blur-[100px] rounded-full"></div>
-        <div class="absolute bottom-1/4 right-0 w-64 h-64 bg-blue-300/10 blur-[100px] rounded-full"></div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 text-center opacity-60">
-        <p class="text-xs uppercase tracking-widest font-bold">Instagram: yusfyl3</p>
-        <p class="text-[10px] mt-2 italic">Aşkla tasarlandı ❤️</p>
-    </footer>
-
-    <!-- Kopyalandı Bildirimi -->
-    <div id="copyNotify" class="copy-notification font-semibold text-sm">
-        ✨ Dosya adı kopyalandı!
-    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
-        function toggleTheme() {
-            const body = document.body;
-            const icon = document.getElementById('themeIcon');
-            body.classList.toggle('dark-theme');
-            
-            if (body.classList.contains('dark-theme')) {
-                icon.innerText = '☀️';
+        // --- FIREBASE YAPILANDIRMASI ---
+        // Kendi Firebase konsolundan kopyaladığın verileri buraya ekle
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Firebase Başlatıcı
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // --- SEPET MANTIĞI VE DEĞİŞKENLERİ ---
+        let sepet = [];
+
+        // Sepete Ürün Ekleme (Mevcutsa Adet Artırma)
+        function sepeteEkle(urunAdi, fiyat) {
+            const varOlanUrun = sepet.find(item => item.ad === urunAdi);
+            if (varOlanUrun) {
+                varOlanUrun.adet += 1;
             } else {
-                icon.innerText = '🌙';
+                sepet.push({ ad: urunAdi, fiyat: fiyat, adet: 1 });
+            }
+            sepetiGuncelle();
+        }
+
+        // Sepetten Ürün Azaltma / Sıfıra Düştüğünde Silme
+        function sepettenAzalt(urunAdi) {
+            const urunIndex = sepet.findIndex(item => item.ad === urunAdi);
+            if (urunIndex > -1) {
+                sepet[urunIndex].getAdet = sepet[urunIndex].adet -= 1;
+                if (sepet[urunIndex].adet === 0) {
+                    sepet.splice(urunIndex, 1);
+                }
+            }
+            sepetiGuncelle();
+        }
+
+        // Tüm Sepeti Sıfırlama
+        function sepetiTemizle() {
+            sepet = [];
+            sepetiGuncelle();
+        }
+
+        // Sepet Arayüzünün Yenilenmesi ve Matematiksel Hesaplama
+        function sepetiGuncelle() {
+            const sepetListesi = document.getElementById('sepet-listesi');
+            const sepetToplam = document.getElementById('sepet-topham');
+            
+            if (sepet.length === 0) {
+                sepetListesi.innerHTML = `<div class="text-center py-8 text-xs text-slate-500">Henüz ürün seçilmedi.</div>`;
+                sepetToplam.innerText = '0.00 ₺';
+                return;
+            }
+
+            sepetListesi.innerHTML = '';
+            let toplam = 0;
+
+            sepet.forEach(item => {
+                const urunToplam = item.fiyat * item.adet;
+                toplam += urunToplam;
+
+                sepetListesi.innerHTML += `
+                    <div class="bg-slate-950/60 border border-slate-900 rounded-lg p-2 flex justify-between items-center text-xs">
+                        <div class="flex-1 min-w-0 pr-2">
+                            <div class="font-medium text-slate-200 truncate">${item.ad}</div>
+                            <div class="text-slate-500 mt-0.5">${item.fiyat.toFixed(2)} ₺</div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="sepettenAzalt('${item.ad}')" class="w-6 h-6 bg-slate-900 border border-slate-800 text-slate-400 rounded flex items-center justify-center hover:bg-slate-700">-</button>
+                            <span class="font-mono text-slate-300 w-4 text-center">${item.adet}</span>
+                            <button onclick="sepeteEkle('${item.ad}', ${item.fiyat})" class="w-6 h-6 bg-slate-900 border border-slate-800 text-slate-400 rounded flex items-center justify-center hover:bg-slate-700">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            sepetToplam.innerText = `${toplam.toFixed(2)} ₺`;
+        }
+
+        // --- FIRESTORE VERİ TRANSFERİ ---
+        // Onaylanan Sepeti Firestore Veritabanına Gönderme
+        async function siparisGonder() {
+            const masaNo = document.getElementById('table-no').value.trim();
+            if (!masaNo) {
+                alert("Lütfen önce bir masa numarası girin!");
+                return;
+            }
+            if (sepet.length === 0) {
+                alert("Sepetiniz boş, adisyon oluşturulamaz.");
+                return;
+            }
+
+            // Sepet içeriğini alt alta metne dönüştür
+            const detayMetni = sepet.map(item => `${item.adet}x ${item.ad}`).join('\n');
+            const toplamTutar = sepet.reduce((top, item) => top + (item.fiyat * item.adet), 0);
+
+            const yeniSiparis = {
+                masa: masaNo,
+                detay: detayMetni,
+                tutar: toplamTutar,
+                durum: "Hazırlanıyor",
+                tarih: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                await db.collection('siparisler').add(yeniSiparis);
+                sepetiTemizle();
+                document.getElementById('table-no').value = '';
+            } catch (error) {
+                console.error("Hata: ", error);
+                alert("Sipariş gönderilemedi, kuralları veya config bilgilerini kontrol edin.");
             }
         }
 
-        function copyLink(filename) {
-            const tempInput = document.createElement('input');
-            tempInput.value = filename;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
+        // Durum Değiştirme (Hazırlanıyor -> Tamamlandı)
+        window.durumGuncelle = async (id, mevcutDurum) => {
+            const yeniDurum = mevcutDurum === "Hazırlanıyor" ? "Tamamlandı" : "Hazırlanıyor";
+            try {
+                await db.collection('siparisler').doc(id).update({ durum: yeniDurum });
+            } catch (error) {
+                console.error("Durum güncellenirken hata: ", error);
+            }
+        };
 
-            const notify = document.getElementById('copyNotify');
-            notify.style.display = 'block';
-            setTimeout(() => {
-                notify.style.display = 'none';
-            }, 2000);
-        }
+        // Adisyon Kapatma (Koleksiyondan Silme)
+        window.siparisSil = async (id) => {
+            if(confirm("Bu adisyon kapatılacak (silinecek). Emin misiniz?")) {
+                try {
+                    await db.collection('siparisler').doc(id).delete();
+                } catch (error) {
+                    console.error("Sipariş silinirken hata: ", error);
+                }
+            }
+        };
+
+        // --- REAL-TIME ANLIK DİNLEME (SNAPSHOT) ---
+        // Veritabanında bir değişiklik olduğu an sayfayı yenilemeden veriyi çeker
+        db.collection('siparisler').orderBy('tarih', 'desc').onSnapshot((snapshot) => {
+            const container = document.getElementById('orders-container');
+            document.getElementById('order-count').innerText = `${snapshot.size} Sipariş`;
+
+            if (snapshot.empty) {
+                container.innerHTML = `<div class="py-12 text-center text-slate-500 text-sm">Aktif adisyon bulunmuyor.</div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            snapshot.forEach((doc) => {
+                const s = doc.data();
+                const id = doc.id;
+                
+                // Durum moduna göre renk paletleri
+                const statusClass = s.durum === "Hazırlanıyor" 
+                    ? "bg-amber-500/10 text-amber-400 border-amber-500/20" 
+                    : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+
+                container.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-850 rounded-xl p-4 flex flex-col justify-between transition-all hover:border-slate-800">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="font-bold text-sm text-white tracking-wide">${s.masa}</span>
+                                <span class="text-[10px] font-medium px-2 py-0.5 rounded-full border ${statusClass}">${s.durum}</span>
+                            </div>
+                            <p class="text-xs text-slate-400 whitespace-pre-line bg-slate-950/40 p-2.5 rounded-lg border border-slate-850/50 min-h-[50px] font-mono leading-relaxed">${s.detay}</p>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-slate-850 flex justify-between items-center">
+                            <div>
+                                <span class="text-[10px] text-slate-500 block">Masa Tutarı</span>
+                                <span class="font-semibold text-xs text-amber-500">${s.tutar.toFixed(2)} ₺</span>
+                            </div>
+                            <div class="flex gap-1.5">
+                                <button onclick="durumGuncelle('${id}', '${s.durum}')" class="text-[11px] bg-slate-850 border border-slate-800 text-slate-300 px-2.5 py-1.5 rounded-lg hover:bg-slate-800 transition-colors">
+                                    ${s.durum === "Hazırlanıyor" ? "Hazır" : "Geri Al"}
+                                </button>
+                                <button onclick="siparisSil('${id}')" class="text-[11px] bg-rose-500/10 border border-rose-500/20 text-rose-400 px-2.5 py-1.5 rounded-lg hover:bg-rose-500/20 transition-colors">
+                                    Kapat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
     </script>
 </body>
 </html>
